@@ -1,0 +1,70 @@
+package arraylist.demo;
+
+import java.awt.List;
+/**
+ * 
+ * @author FHY
+ * 删除链表中倒数第K个元素
+ */
+public class DeleteLastKNode {
+
+	public static void main(String[] args) {
+		//在main中进行测试
+		ListNode list = new ListNode(2);
+		ListNode l1 = new ListNode(4);
+		ListNode l2 = new ListNode(5);
+		ListNode l3 = new ListNode(8);
+		ListNode l4 = new ListNode(3);
+		list.next = l1;
+		l1.next = l2;
+		l2.next = l3;
+		l3.next = l4;
+		printAll(list);
+		ListNode result = deleteLastKth(list, 3);
+		printAll(result);
+		
+	}
+	
+	//删除倒数第K个结点
+	public static ListNode deleteLastKth(ListNode list, int k) {
+		ListNode fast = list;
+	    int i = 1;
+	    
+	    //移动fast结点到正数第K个元素
+	    while (fast != null && i < k) {
+	    	fast = fast.next;
+	    	++i;
+	    }
+
+	    //链表结点数量不足K，直接返回链表
+	    if (fast == null) return list;
+
+	    ListNode slow = list;
+	    ListNode prev = null;
+	    
+	    //当fast指向最后一个结点时，slow正好指向倒数第K个元素
+	    while (fast.next != null) {
+	    	fast = fast.next;
+	    	prev = slow;
+	    	slow = slow.next;
+	    }
+
+	    //链表结点数一共K个，直接删除头结点即可
+	    if (prev == null) {
+	    	list = list.next;
+	    } else {
+	    	//slow是倒数第K个元素
+	    	prev.next = prev.next.next;
+	    }
+	    return list;
+	  }
+	
+	public static void printAll(ListNode list) {
+		ListNode p = list;
+		while (p != null) {
+			System.out.print(p.value + " ");
+		    p = p.next;
+		}
+		    System.out.println();
+	}
+}
